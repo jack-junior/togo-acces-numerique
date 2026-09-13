@@ -171,6 +171,8 @@ onglets = st.tabs(['Vue d\'ensemble', 'Implantations', 'Inégalités d\'accès',
 
 # ================================================================ 1. DIAGNOSTIC
 with onglets[0]:
+    st.caption('Objectif 2 du défi : mesurer la répartition des services numériques '
+               'et repérer les écarts d’accès entre les préfectures.')
     sel_ind = st.selectbox('Indicateur à cartographier', list(INDICATEURS),
                            format_func=lambda k: INDICATEURS[k][0])
     label, kind = INDICATEURS[sel_ind]
@@ -325,6 +327,8 @@ with onglets[1]:
 
 # ================================================================ 2. ÉQUITÉ
 with onglets[2]:
+    st.caption('Objectif 2 du défi : comparer l’équité d’accès aux points mobile money '
+               'et aux agences opérateurs.')
     gini_momo = indice_gini(d, 'momo_total')
     gini_agences = indice_gini(d, 'agences_telecom')
     deficit = d.assign(deficit=(-d.momo_ecart).clip(lower=0))
@@ -402,6 +406,8 @@ with onglets[2]:
 # ================================================================ 3. DENSITÉ & INFRASTRUCTURE (objectif 3)
 with onglets[3]:
     st.markdown('#### Croisement densité de population × implantation des infrastructures')
+    st.caption('Objectif 3 du défi : croiser la densité de population avec l’implantation '
+               'des infrastructures et identifier les territoires atypiques.')
     c1, c2 = st.columns([1.2, 1])
     with c1:
         x = d.densite_hab_km2
@@ -455,12 +461,14 @@ with onglets[3]:
         f"En dessous : **{', '.join(sous)}** — densité comparable, accès nettement "
         f"plus faible. Ce sont des cibles d'extension à coût marginal réduit.",
     ])
-    st.caption('Objectif 3 du défi. La tendance est descriptive : elle résume le nuage, '
+    st.caption('La tendance est descriptive : elle résume le nuage, '
                'elle n\'estime aucun effet causal et ne produit aucun test de '
                'significativité — ces données sont un inventaire, pas un échantillon.')
 
 # ================================================================ 4. ZONES BLANCHES
 with onglets[4]:
+    st.caption('Objectif 4 du défi : repérer les territoires sans agence ou éloignés '
+               'd’un point de service, avec un diagnostic détaillé à l’échelle cantonale.')
     st.markdown('#### Préfectures sans aucune agence télécom')
     z = sans.sort_values('population_rgph5_2022', ascending=False)
     c1, c2 = st.columns([1, 1.25])
@@ -576,7 +584,7 @@ with onglets[4]:
         f"**{vide.region.value_counts().idxmax() if len(vide) else '—'}** — "
         f"un résultat invisible à l'échelle de la préfecture, qui moyenne ces écarts.",
     ])
-    st.caption('Objectif 4 du défi, traité à l\'échelle du canton. Les couches de '
+    st.caption('Les couches de '
                'couverture radio du Géoportail étant en accès restreint (HTTP 403), '
                'la zone blanche est définie par la distance au service, mesurée depuis '
                'le centroïde du canton. Limite assumée : le centroïde n\'est pas le '
@@ -620,6 +628,8 @@ with onglets[5]:
 # ================================================================ 6. RECOMMANDATIONS (objectif 5)
 with onglets[6]:
     st.markdown('#### Priorisation de l\'extension — score transparent')
+    st.caption('Objectif 5 du défi : transformer les écarts observés en priorités '
+               'd’extension de la connectivité et des services numériques.')
     st.markdown("""
 Le score de priorité est **entièrement explicite et recalculable** :
 
