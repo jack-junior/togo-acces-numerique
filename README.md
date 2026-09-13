@@ -12,6 +12,14 @@ méthodologique et le rapport.
 ## Démarrage rapide
 
 ```bash
+python -m venv .venv
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# Git Bash
+source .venv/Scripts/activate
+
 pip install -r requirements.txt
 
 streamlit run app.py          # lancer le tableau de bord
@@ -20,6 +28,9 @@ python scripts/run_all.py     # rejouer toute la chaîne depuis les données bru
 
 Le tableau de bord s'ouvre sur <http://localhost:8501> et fonctionne **hors
 ligne** : aucune API n'est appelée à l'exécution.
+
+Le dashboard est également publié en ligne :
+<https://togo-acces-numerique.streamlit.app/>
 
 ---
 
