@@ -32,7 +32,8 @@ mm   = wkt_points(pd.read_csv(f'{DATA}/mobilemoney.csv'))
 cp   = pd.read_csv(f'{DATA}/canalplus_boutiques.csv')      # lat/lon déjà séparés
 
 # CANAL+ : affectation par jointure spatiale (pas de champ préfecture)
-pref = json.load(open(f'{DATA}/limites_prefectures.geojson'))
+with open(f'{DATA}/limites_prefectures.geojson', encoding='utf-8') as handle:
+    pref = json.load(handle)
 geoms = [shape(f['geometry']) for f in pref['features']]
 fids  = [f['id'] for f in pref['features']]
 tree  = STRtree(geoms)

@@ -55,7 +55,8 @@ def main():
     print(f'Population : {len(POPULATION)} préfectures, somme vérifiée '
           f'= {TOTAL_NATIONAL_RGPH5:,}'.replace(',', ' '))
 
-    gj = json.load(open(DATA / 'limites_prefectures.geojson'))
+    with open(DATA / 'limites_prefectures.geojson', encoding='utf-8') as handle:
+        gj = json.load(handle)
     geoms = [shape(f['geometry']) for f in gj['features']]
     fids = [f['id'] for f in gj['features']]
     tree = STRtree(geoms)

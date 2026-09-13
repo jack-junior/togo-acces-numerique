@@ -6,12 +6,14 @@ tab = pd.read_csv(OUTPUTS / 'analyse_prefecture.csv')
 tab.to_csv(OUT/'analyse_prefecture.csv', index=False, encoding='utf-8')
 
 # GeoJSON préfectures enrichi des noms (les polygones Géodata n'ont aucun attribut)
-gj = json.load(open(f'{DATA}/limites_prefectures.geojson'))
+with open(f'{DATA}/limites_prefectures.geojson', encoding='utf-8') as handle:
+    gj = json.load(handle)
 meta = tab.set_index('fid')[['prefecture','region']].to_dict('index')
 for f in gj['features']:
     m = meta.get(f['id'], {})
     f['properties'] = {'fid': f['id'], **m}
-json.dump(gj, open(OUT/'prefectures.geojson','w'), ensure_ascii=False)
+with open(OUT/'prefectures.geojson', 'w', encoding='utf-8') as handle:
+    json.dump(gj, handle, ensure_ascii=False)
 
 def pts(path, cols, **extra):
     d = pd.read_csv(f'{DATA}/{path}')

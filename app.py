@@ -47,11 +47,13 @@ st.markdown(f"""<style>
 @st.cache_data
 def load():
     tab = pd.read_csv(BASE / 'analyse_prefecture.csv')
-    geo = json.load(open(BASE / 'prefectures.geojson'))
+    with open(BASE / 'prefectures.geojson', encoding='utf-8') as handle:
+        geo = json.load(handle)
     infra = pd.read_csv(BASE / 'infrastructures.csv')
     mm = pd.read_csv(BASE / 'mobile_money.csv')
     cant = pd.read_csv(BASE / 'analyse_canton.csv')
-    cgeo = json.load(open(BASE / 'cantons.geojson'))
+    with open(BASE / 'cantons.geojson', encoding='utf-8') as handle:
+        cgeo = json.load(handle)
     return tab, geo, infra, mm, cant, cgeo
 
 tab, GEO, INFRA, MM, CANT, CGEO = load()

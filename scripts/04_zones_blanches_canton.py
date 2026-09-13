@@ -46,7 +46,8 @@ tree_all = cKDTree(proj(pts))
 tree_ag  = cKDTree(proj(agences))
 
 # ---- cantons
-gj = json.load(open(f'{DATA}/limites_cantons.geojson'))
+with open(f'{DATA}/limites_cantons.geojson', encoding='utf-8') as handle:
+    gj = json.load(handle)
 geoms = [shape(f['geometry']) for f in gj['features']]
 fids  = [f['id'] for f in gj['features']]
 
@@ -99,7 +100,8 @@ meta = cn.set_index('fid')[['canton','prefecture','region','points_service',
 for f in gj['features']:
     f['properties'] = {'fid': f['id'], **{k: (None if pd.isna(v) else v)
                                           for k, v in meta[f['id']].items()}}
-json.dump(gj, open(OUT / 'cantons.geojson', 'w'), ensure_ascii=False)
+with open(OUT / 'cantons.geojson', 'w', encoding='utf-8') as handle:
+    json.dump(gj, handle, ensure_ascii=False)
 cn.drop(columns=['code_pref']).to_csv(OUT / 'analyse_canton.csv',
                                       index=False, encoding='utf-8')
 
