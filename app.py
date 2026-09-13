@@ -114,11 +114,10 @@ def lire(dd, col=None):
     return out
 
 def bloc_lecture(items):
+    st.caption('Ces constats sont recalculés à chaque changement de filtre.')
     st.markdown('##### Lecture automatique')
     for it in items:
         st.markdown(f'- {it}')
-    st.caption('Ces constats sont recalculés à chaque changement de filtre — '
-               'ils ne sont pas figés dans le code.')
 
 # ---------------------------------------------------------------- en-tête
 st.markdown("<div class='eyebrow'>Togo AI Lab · Économie numérique · Défi 1</div>"
@@ -264,6 +263,9 @@ with onglets[0]:
 # ================================================================ 1. IMPLANTATIONS (objectif 1)
 with onglets[1]:
     st.markdown('#### Répartition spatiale des implantations physiques')
+    st.caption('Objectif 1 du défi : cartographier les agences opérateurs '
+               '(Moov, Togocom), les boutiques CANAL+ et les data centers. '
+               'Les data centers portent un marqueur distinct, en plus de la couleur.')
     i = INFRA[INFRA.region.isin(sel_reg)] if sel_reg else INFRA.copy()
     cats = st.multiselect('Catégories affichées', sorted(i.operateur.unique()),
                           default=sorted(i.operateur.unique()), key='catimp')
@@ -320,10 +322,6 @@ with onglets[1]:
         "Les 3 data centers du pays sont tous en région Maritime ; les 7 boutiques "
         "CANAL+ recensées sont toutes dans le Grand Lomé.",
     ])
-    st.caption('Objectif 1 du défi — cartographie des agences opérateurs '
-               '(Moov, Togocom), des boutiques CANAL+ et des data centers. '
-               'Les data centers portent un marqueur distinct (encodage secondaire), '
-               'pas seulement une couleur.')
 
 # ================================================================ 2. ÉQUITÉ
 with onglets[2]:
@@ -749,10 +747,7 @@ with onglets[7]:
 
 Le tableau de bord **ne se connecte à aucune API en direct**. Il lit des fichiers
 figés (`data_app/`), produits une fois pour toutes par les scripts du projet à
-partir des sources ci-dessous. C'est un choix assumé : l'application démarre hors
-ligne, s'exécute à l'identique chez n'importe quel évaluateur, et les chiffres du
-rapport correspondent exactement à ceux de l'écran. La contrepartie est qu'il
-s'agit d'un **instantané**, pas d'un flux temps réel.
+partir des sources ci-dessous. Il s'agit d'un **instantané**, pas d'un flux temps réel.
 
 `scripts/01_table_prefecture.py` → table d'analyse par préfecture ·
 `scripts/02_prepare_app_data.py` → fichiers de l'application ·
@@ -768,8 +763,7 @@ s'agit d'un **instantané**, pas d'un flux temps réel.
 
 #### Les six hypothèses sur lesquelles repose ce diagnostic
 
-Aucune n'est neutre. Changer l'une d'elles change les conclusions, donc chacune est
-énoncée ici plutôt que dissimulée dans le code.
+Aucune n'est neutre. Changer l'une d'elles change les conclusions.
 
 **H1 — La répartition « attendue » est proportionnelle à la population.**
 Tout l'écart observé/attendu et tout le score de priorité en découlent. C'est une
@@ -807,9 +801,6 @@ n'auraient pas de sens sur un recensement d'établissements. La rigueur ici est
 descriptive et spatiale.
 
 #### Limites déclarées
-- **Double comptage évité** : la couche « Télécom » est la couche parente de Moov et
-  Togocom (90 = 62 + 28, aucun identifiant commun). Les trois ne sont **jamais**
-  additionnées ; `telecom` est la table maîtresse, `moov` et `togocom` la ventilation.
 - **Millésimes hétérogènes** : population de 2022, implantations de date inconnue.
 - **Manquants conservés** : 1 348 points mobile money (6,8 %) portent `operateur = "Nsp"`.
   Ce sont des manquants déguisés en texte, affichés comme catégorie à part, jamais
