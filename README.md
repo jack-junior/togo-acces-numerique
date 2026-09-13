@@ -61,8 +61,7 @@ Le dashboard est également publié en ligne :
 ├── docs/                  Documentation des sources et contrôles qualité
 │   └── sources_donnees.md
 │
-├── rapport/               Rapport de présentation, 10 slides (PDF et PPTX)
-└── PUBLIER.md             Déployer le tableau de bord en ligne
+└── rapport/               Rapport de présentation, 10 slides (PDF et PPTX)
 ```
 
 ---
